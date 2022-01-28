@@ -21,21 +21,29 @@
             </div>
         </div>
     </div>
-    
-    {{#each komentar}}
-            <p> {{this.body}}</p>
-            <p> {{user.displayName}}</p>
-        
-        {{else}}
-        <p>No comments to display</p>
-    {{/each}}
-    
+ 
+</div>
+
     <div id="respond">
         <h3>Leave a Comment</h3>
         <form action="/stories/{{story._id}}" method="POST" id="commentform">
             <label for="comment" class="required">Your message</label>
             <textarea name="comment" id="comment" rows="10" tabindex="4"  required="required"></textarea>
-            <input name="submit" type="submit" value="Submit comment" />
+            <input name="submit" type="submit" value="Submit comment" class="btn waves-effect  dugme"/>
         </form>
     </div>
-</div>
+
+   <div class="row">
+        {{#each komentar}}
+        <div class="col s12 m12 containerComment">
+            <h5> {{user.displayName}}  <span class="card-title"> <small>{{formatDate date 'MMMM Do YYYY, h:mm:ss a'}}</small></span></h5>
+            <p><strong>Commented: </strong></p>
+            <p> {{this.body}}</p>
+        </div>
+            
+        {{else}}
+        <p>No comments to display</p>
+    {{/each}}
+    </div>
+
+    
