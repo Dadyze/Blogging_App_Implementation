@@ -112,12 +112,10 @@ router.put('/:id', ensureAuth, async (req, res) => {
 router.delete('/:id', ensureAuth, async (req, res) => {
   try {
     let story = await Story.findById(req.params.id).lean()
-    console.log(story)
     if (!story) {
       return res.render('error/404')
     }
  else {
-   
   await Story.remove({ _id: req.params.id })
   res.redirect('/dashboard')
     }
