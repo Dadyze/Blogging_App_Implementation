@@ -21,4 +21,21 @@
             </div>
         </div>
     </div>
+    
+    {{#each komentar}}
+            <p> {{this.body}}</p>
+            <p> {{user.displayName}}</p>
+        
+        {{else}}
+        <p>No comments to display</p>
+    {{/each}}
+    
+    <div id="respond">
+        <h3>Leave a Comment</h3>
+        <form action="/stories/{{story._id}}" method="POST" id="commentform">
+            <label for="comment" class="required">Your message</label>
+            <textarea name="comment" id="comment" rows="10" tabindex="4"  required="required"></textarea>
+            <input name="submit" type="submit" value="Submit comment" />
+        </form>
+    </div>
 </div>

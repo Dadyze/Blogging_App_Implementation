@@ -3,8 +3,10 @@ const router = express.Router()
 const { ensureAuth } = require('../middleware/auth')
 
 const Story = require('../models/Story')
+const Comment = require("../models/Comment"
 
-
+)
+//var comments = [];
 var buffer = null;
 // @desc    Show add page
 // @route   GET /stories/add
@@ -63,6 +65,32 @@ router.get('/:id', ensureAuth, async (req, res) => {
   } catch (err) {
     console.error(err)
     res.render('error/404')
+  }
+})
+
+// @desc add Comment
+// @route POST /stories/:id
+
+router.post("/:id", ensureAuth, async(req,res) =>{
+  try{
+    let com = new Comment();
+    com.body = req.body.comment;
+    com.story = req.params.id;
+    com.user = req.session.passport.user;
+    //comments.push(com);
+
+    //console.log(com);
+    Comment.create(com);
+
+    let story = await Story.findById(req.params.id).populate('user').lean()
+    let komentar = await Comment.find({story:req.params.id}).populate("user").lean();
+    
+    console.log(komentar);
+    res.render("stories/show",{story,komentar,})
+    
+  }catch(err){
+    console.log(err);
+    res.render("error/404");
   }
 })
 
