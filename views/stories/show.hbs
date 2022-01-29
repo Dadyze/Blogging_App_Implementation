@@ -39,12 +39,16 @@
             <h5> {{user.displayName}}  <span class="card-title"> <small>{{formatDate date 'MMMM Do YYYY, h:mm:ss a'}}</small></span></h5>
             <p><strong>Commented: </strong></p>
             <p> {{this.body}}</p>
-            <form action= "/stories/comment/{{_id}}" method="POST" id="deleteComment">
-               <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" class="btn red DeleteComment">
-                        <i class="fas fa-trash"></i>
-                    </button>
-            </form>
+            <p> {{allowEdit}}</p>
+            {{#if ../allowEdit}}
+                <form action= "/stories/comment/{{_id}}" method="POST" id="deleteComment">
+                <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn red DeleteComment">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                </form>
+            {{/if}}
+
         </div>
             
         {{else}}

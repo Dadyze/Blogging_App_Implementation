@@ -50,6 +50,11 @@ router.get('/', ensureAuth, async (req, res) => {
 // @route   GET /stories/:id
 router.get('/:id', ensureAuth, async (req, res) => {
   try {
+    let sessionUser = req.session.passport.user;
+    let storyUserID = req.params.id;
+    let adminID = process.env.admin_ID.toString();
+
+    var allowEdit = (sessionUser == storyUserID || sessionUser == adminID ) ? true : null
     let story = await Story.findById(req.params.id).populate('user').lean()
     let komentar = await Comment.find({story:req.params.id}).populate("user").lean();
     if (!story) {
@@ -60,7 +65,7 @@ router.get('/:id', ensureAuth, async (req, res) => {
       res.render('error/404')
     } else {
       res.render('stories/show', {
-        story,komentar
+        story,komentar,allowEdit
       })
     }
   } catch (err) {
@@ -98,7 +103,6 @@ router.delete('/comment/:id',ensureAuth, async(req,res)=>{
     if(err) return res.send(500, err)});
   let story = await Story.findById(kom.story._id).populate('user').lean()
   let komentar = await Comment.find({story:kom.story._id}).populate("user").lean();
-  res.render("stories/show",{story,komentar,})
 
 })
 
