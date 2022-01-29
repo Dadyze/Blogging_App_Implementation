@@ -4,6 +4,7 @@ const { ensureAuth, ensureGuest } = require('../middleware/auth')
 
 const Story = require('../models/Story')
 const Comment = require('../models/Comment');
+
 // @desc    Login/Landing page
 // @route   GET /
 
