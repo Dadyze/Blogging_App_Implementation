@@ -3,7 +3,7 @@ const router = express.Router()
 const { ensureAuth, ensureGuest } = require('../middleware/auth')
 
 const Story = require('../models/Story')
-
+const Comment = require('../models/Comment');
 // @desc    Login/Landing page
 // @route   GET /
 
@@ -51,5 +51,31 @@ router.get('/dashboard', ensureAuth, async (req, res) => {
     res.render('error/500')
   }
 })
+
+
+// @desc    Show single story - NOT LOGGGD IN
+// @route   GET /:id
+
+router.get('/guest/:id', async (req,res) =>{
+  try {
+    let story = await Story.findById(req.params.id).populate('user').lean()
+    let komentar = await Comment.find({story:req.params.id}).populate("user").lean();
+    if (!story) {
+      return res.render('error/404')
+    }
+
+    if (story.status == 'private') {
+      res.render('error/404')
+    } else {
+      res.render('stories/guestShow', {
+        story,komentar
+      })
+    }
+  } catch (err) {
+    console.error(err)
+    res.render('error/404')
+  }
+})
+
 
 module.exports = router

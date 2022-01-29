@@ -54,4 +54,9 @@ p {
 .dugme{
   color: white;
   background-color: orange;
+  margin: 15px;
+}
+.DeleteComment{
+  margin: 10px;
+  float: right;
 }

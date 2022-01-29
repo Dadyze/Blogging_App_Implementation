@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 const { ensureAuth } = require('../middleware/auth')
 
-const Story = require('../models/Story')
-const Comment = require("../models/Comment")
+var  Story = require('../models/Story')
+var Comment = require("../models/Comment")
 
 
 var buffer = null;
@@ -90,6 +90,18 @@ router.post("/:id", ensureAuth, async(req,res) =>{
     res.render("error/404");
   }
 })
+// @desc delete Comment
+// @route Delete /stories/comment/:id
+router.delete('/comment/:id',ensureAuth, async(req,res)=>{
+  let kom = await Comment.findById(req.params.id).populate("story").populate("user").lean();
+  Comment.findByIdAndRemove(req.params.id,function(err, genre){
+    if(err) return res.send(500, err)});
+  let story = await Story.findById(kom.story._id).populate('user').lean()
+  let komentar = await Comment.find({story:kom.story._id}).populate("user").lean();
+  res.render("stories/show",{story,komentar,})
+
+})
+
 
 // @desc    Show edit page
 // @route   GET /stories/edit/:id
