@@ -14,13 +14,15 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Remove existing directory if it exists
-                    sh 'rm -rf BlogApp-in-NodeJS'
-                    // Clone the repository
-                    sh 'git clone https://github.com/Dadyze/BlogApp-in-NodeJS.git'
-                    dir('BlogApp-in-NodeJS') {
-                        // Install dependencies and run tests to ensure the project is ready for deployment
-                        sh 'npm install'
+                    withCredentials([string(credentialsId: 'github-access-token', variable: 'GITHUB_TOKEN')]) {
+                        // Remove existing directory if it exists
+                        sh 'rm -rf BlogApp-in-NodeJS'
+                        // Clone the repository using the GitHub token
+                        sh 'git clone https://github.com/Dadyze/BlogApp-in-NodeJS.git'
+                        dir('BlogApp-in-NodeJS') {
+                            // Install dependencies and run tests to ensure the project is ready for deployment
+                            sh 'npm install'
+                        }
                     }
                 }
             }
@@ -61,9 +63,8 @@ pipeline {
                         sudo docker stop blogapp || true
                         sudo docker rm blogapp || true
                         sudo docker run -d -p 3000:3000 --name blogapp ${DOCKER_IMAGE}:${COMMIT_HASH}
-               
+                        EOF
                         """
-                        
                     }
                 }
             }
