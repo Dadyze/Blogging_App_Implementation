@@ -63,7 +63,6 @@ pipeline {
                         sudo docker stop blogapp || true
                         sudo docker rm blogapp || true
                         sudo docker run -d -p 3000:3000 --name blogapp ${DOCKER_IMAGE}:${COMMIT_HASH}
-                        EOF
                         """
                     }
                 }
