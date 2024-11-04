@@ -41,17 +41,17 @@ This is a blog system developed using Node.js, Express, Passport, and MongoDB. T
    npm start
 5. Open your browser and navigate to http://localhost:3000.
 
-##Usage
+## Usage
 Register a new user account to start creating blog posts.
 Use the navigation to view all blog posts or edit existing ones.
-##Project Structure
+## Project Structure
 - app.js: Main application file where the server is set up.
 - config/: Configuration files, including database connection settings.
 - models/: Database models for MongoDB.
 - routes/: Express routes for handling HTTP requests.
 - views/: Handlebars templates for rendering the UI.
 - public/: Static assets including CSS styles.
-##Contributing
+## Contributing
 Contributions are welcome! Feel free to submit issues or pull requests if you have suggestions or improvements.
-##Acknowledgments
+## Acknowledgments
 This application serves as a practical demonstration of building a full-stack web application using modern JavaScript technologies.
