@@ -16,10 +16,10 @@ pipeline {
                 script {
                     withCredentials([string(credentialsId: 'github-access-token', variable: 'GITHUB_TOKEN')]) {
                         // Remove existing directory if it exists
-                        sh 'rm -rf BlogApp-in-NodeJS'
+                        sh 'rm -rf Blogging_App_Implementation'
                         // Clone the repository using the GitHub token
-                        sh 'git clone https://github.com/Dadyze/BlogApp-in-NodeJS.git'
-                        dir('BlogApp-in-NodeJS') {
+                        sh 'git clone https://github.com/Dadyze/Blogging_App_Implementation.git'
+                        dir('Blogging_App_Implementation') {
                             // Install dependencies and run tests to ensure the project is ready for deployment
                             sh 'npm install'
                         }
@@ -31,7 +31,7 @@ pipeline {
         stage('Backup') {
             steps {
                 script {
-                    dir('BlogApp-in-NodeJS') {
+                    dir('Blogging_App_Implementation') {
                         // Get the shortened commit hash
                         COMMIT_HASH = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
 
